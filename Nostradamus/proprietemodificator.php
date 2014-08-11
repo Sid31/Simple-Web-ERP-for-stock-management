@@ -1,0 +1,185 @@
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Projet Nostradamus</title>
+		<link href="css/foundation.css" rel="stylesheet" type="text/css">
+		<script type="text/javascript"></script>
+	</head>
+	<body>
+		<h1> Modification de propriété</h1>
+		<nav class="top-bar" data-topbar>
+			<ul class="title-area">
+				<li class="name">
+					<h1><a href="index.php">Accueil</a></h1>
+				</li>
+				<li class="toggle-topbar menu-icon">
+					<a href="#">Menu</a>
+				</li>
+			</ul>
+			<section class="top-bar-section">
+				<!-- Right Nav Section -->
+				<ul class="right"></ul> 
+				<!-- Left Nav Section -->
+				<ul class="left">
+					<li class="has-dropdown not-click">
+						<a style="color: lightblue">Produit</a><!-- menu selectioné -->
+						<ul class="dropdown">
+							<li>
+								<a href="AjoutProduit.html">Créer une Produit</a>
+							</li>							
+							<li>
+								<a href="proprietecreator.html">Créer une propriété</a>
+							</li>
+						</ul>
+					</li>
+					<li class="has-dropdown not-click">
+						<a>Stock</a><!-- menu selectioné -->
+						<ul class="dropdown">
+							<li>
+								<a href="GestionStock.php">Ajouter un produit</a>
+							</li>
+							<li>
+								<a href="consultationBaseProduit.php">Consultation stock</a>
+							</li>
+							<li>
+								<a href="consultationStockA.php">Tableau croisé</a>
+							</li>
+						</ul>
+						<li class="has-dropdown not-click">
+						<a >Graphe</a><!-- menu selectioné -->
+						<ul class="dropdown">
+							<li>
+								<a href="graphe.php">Graphe du stock</a>
+							</li>							
+						</ul>
+					</li>
+					</li>
+				</ul>
+			</section>
+		</nav>
+		<div class="panel clearfix ">
+			<?
+				$idPropriete=$_REQUEST["id"];
+				$modif=$_REQUEST["modif"];							
+			 	if (!isset($idPropriete)){
+			 	include 'control/listeProprieteModifiable.php';
+			 	?> <div class="row">
+							<div class="medium-3 columns ">					
+					<?
+			 	echo "<Table><TR> 
+					 <TH> <h3>Propriete </h3> </TH></TR>";
+				foreach ($tabPropriete as $key => $value){    			
+				echo "<TR><TD>".$value."</TD>
+				<TD><a href='proprietemodificator.php?id=".$key."&modif=1'><img src='img/modifier.png' width='20' height='20' alt=\"effacer\"></a></TD>
+				<TD><a href='proprietemodificator.php?id=".$key."modif=0'><img src='img/effacerX.png' width='20' height='20' alt=\"effacer\"></TD>
+				</TR>";
+				}echo"</Table>";
+			?>
+			</div>
+				</div>
+			<div class="row">
+							<div class="medium-3 columns end">
+						<a href="proprietecreator.html" target="blank" class="tiny  success button  ">+ Créer une nouvelle propriété<span data-dropdown="drop4"></span></a>
+					</div>
+					</div>
+					<?php
+			 }
+			 else {			 	
+				include 'control/chargementProprieteModificator.php';
+			?>
+			<form method="post" id="result" name="result" action="enrgistrementpropriete.php">
+				<div class="row">
+					<h3> Définir le nom et les valeurs de la nouvelle propriété :</h3>
+							<div class="medium-3 columns ">
+								<label for="nomPropriete" class="right">Nom de la propriete</label>
+							</div>
+							<div class="medium-3 columns end">
+								<input type="text" id="nomPropriete"name="nomPropriete" value="<? echo "Couleur" ;?>" placeholder="Nom de propriété">
+							</div>
+						</div>
+				<div class="row">
+					<div class="medium-3 columns ">
+						<label for="radio1">
+							<input name="radioButtons" type="radio" id="enum" value="enum" required=""checked>
+							Énumération</label>
+						<label for="radio2">
+							<input name="radioButtons" type="radio" id="var" value="var"required="">
+							Valeur numérique</label>
+						<label for="radio3">
+							<input name="radioButtons" type="radio" id="text" value="text"required="">
+							Texte</label>
+					</div>
+				</div>				
+									<div class="row">
+						<h3> Ajouter des valeur à la nouvelle propriété :</h3>
+						<div class="medium-3 columns ">
+						<a  name="ajoutValeur" id="ajoutValeur" class="tiny button">+ Ajouter une valeur<span data-dropdown="drop4"></span></a>
+					</div>
+				</div>
+					<div class="row">	
+						<table>
+							<a  name="removeme" id="removeme" class="removeme" style="color:red;"><img src="img/foundation-icons/svgs/fi-trash.svg" alt="X" width="30" height="30"/> </a>
+							<tbody id="valeurs" name="valeurs">
+
+							</tbody>
+						</table>
+					</div>
+					
+					<hr>
+			<div class="row">
+				<button type="submit" id="submit" name="submit" value="valider" style="margin-left:10" class="button  radius success round">
+					Créer la propriété
+				</button>
+				<a class="button  alert radius round" style="margin-left:10"  href="proprietecreator.html">Annuler</a>
+			</div>
+				</form>
+				</div>
+				<?}?>
+		</div>
+		<div id="alertebi"></div><!-- Div remplit par le javascript-->
+		<script type="text/javascript" src="js/vendor/jquery.js"></script>
+		<script type="text/javascript">
+			// Ajax ajout de propriete BDD via bdd
+			$(function() {
+				// à la sélection d une propriete dans la liste
+				var $val = $("#valeurs");
+				var i = 0;
+				// à la sélection d une propriete dans la liste
+				$("#ajoutValeur").click(function() {
+					//var selectElmt = document.getElementById("val");
+					var option = $('input[name=radioButtons]:checked').val();
+					i++;
+					switch(option) {
+						case "enum":
+							$val.append('<tr><td>Valeur ' + i + ' :</td><td><input name="valeur' + i + '" type="text"/></td></tr>');
+							break;
+						case "var":
+							i=0;
+							$val.empty();
+							break;
+						case "text":
+							i=0;
+							$val.empty();
+							break;
+						default:
+							$val.append('<tr><td>Valeur ' + i + ' :</td><td><input name="valeur' + i + '" type="text"/></td></tr>');
+							break;
+						}
+				});
+				$(document.getElementById("removeme")).click(function() {
+					$val.empty();
+					i = 0;
+				});
+			});
+	
+		</script>
+		<script src="js/vendor/jquery.js"></script>
+		<script src="js/vendor/fastclick.js"></script>
+		<script src="js/foundation/foundation.js"></script>
+		<script src="js/foundation/foundation.topbar.js"></script>
+		<script src="js/foundation/foundation.alert.js"></script>
+
+	</body>
+
+</html>
+

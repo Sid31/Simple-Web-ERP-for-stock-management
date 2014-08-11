@@ -1,0 +1,25 @@
+0: [X  , Blanc, Bleu, Rouge, Vert]
+1: [Blanc, 0 , 0, [], [], []]
+2: [Bleu, [], 341, [], []]
+3: [Rouge, [], [], [], []]
+4: [Vert, [], [], [], []]
+
+
+0: [X, Blanc, Bleu, Rouge, Vert]
+1: [Blanc]
+2: {0:Bleu, 2:[{0:341, etat_stock:341}], 3:[], 4:[], 5:[]}
+3: {0:Rouge, 2:[], 3:[], 4:[], 5:[]}
+4: {0:Vert, 2:[], 3:[], 4:[], 5:[]}
+5: {2:[], 3:[], 4:[], 5:[]}
+
+
+
+X	Blanc	Bleu	Rouge	Vert
+Blanc	Blanc	nbs	Bleu	Bleu	nbs	Rouge	Rouge	nbs	Vert	Vert	nbs	Blanc	Blanc	nbs	Bleu	Bleu	341	Rouge	Rouge	nbs	Vert	Vert	nbs	Blanc	Blanc	nbs	Bleu	Bleu	nbs	Rouge	Rouge	nbs	Vert	Vert	nbs	Blanc	Blanc	nbs	Bleu	Bleu	nbs	Rouge	Rouge	nbs	Vert	Vert	nbs
+
+
+
+X	Blanc	Bleu	Rouge	Vert
+Blanc	nbs	Blanc	nbs	Blanc	nbs	Blanc	nbs	Bleu	nbs	Bleu	341	Bleu	nbs	Bleu	nbs	Rouge	nbs	Rouge	nbs	Rouge	nbs	Rouge	nbs	Vert	nbs	Vert	nbs	Vert	nbs	Vert	nbs
+
+<TABLE><TR><TH>X</TH><TH>Blanc</TH><TH>Bleu</TH><TH>Rouge</TH><TH>Vert</TH></TR><TR><TH>Blanc</TH><TD>nbs</TD><TD>nbs</TD><TD>nbs</TD><TD>nbs</TD><TR><TH>Bleu</TH><TD>nbs</TD><TD>341</TD><TD>nbs</TD><TD>nbs</TD><TR><TH>Rouge</TH><TD>nbs</TD><TD>nbs</TD><TD>nbs</TD><TD>nbs</TD><TR><TH>Vert</TH><TD>nbs</TD><TD>nbs</TD><TD>nbs</TD><TD>nbs</TD></TR></TABLE>

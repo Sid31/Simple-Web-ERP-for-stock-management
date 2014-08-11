@@ -1,0 +1,286 @@
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Projet Nostradamus</title>
+		<link href="css/foundation.css" rel="stylesheet" type="text/css">
+		<script type="text/javascript">
+			function valeurEnPlus(propriete) {
+				var valeur = prompt('Entrer une nouvelle valeur.', 'Nouvelle valeur');
+				console.log(propriete);
+				propriete.options[propriete.options.length] = new Option(valeur, valeur);
+			}
+		</script>
+	</head>
+	<body>
+		<h1> Créer un produit</h1>
+		<nav class="top-bar" data-topbar>
+			<ul class="title-area">
+				<li class="name">
+					<h1><a href="index.php">Accueil</a></h1>
+				</li>
+				<li class="toggle-topbar menu-icon">
+					<a href="#">Menu</a>
+				</li>
+			</ul>
+			<section class="top-bar-section">
+				<!-- Right Nav Section -->
+				<ul class="right">
+
+				</ul>
+				<!-- Left Nav Section -->
+				<ul class="left">
+					<li class="has-dropdown not-click">
+						<a style="color: lightblue">Produit</a><!-- menu selectioné -->
+						<ul class="dropdown">
+							<li>
+								<a href="AjoutProduit.html">Créer un Produit</a>
+							</li>
+							<li>
+								<a href="proprietecreator.html">Créer une propriété</a>
+							</li>
+						</ul>
+					</li>
+
+					<li class="has-dropdown not-click">
+						<a>Stock</a><!-- menu selectioné -->
+						<ul class="dropdown">
+							<li>
+								<a href="GestionStock.php">Ajouter un produit</a>
+							</li>
+							<li>
+								<a href="consultationBaseProduit.php">Consulter le stock</a>
+							</li>
+							<li>
+								<a href="consultationStockA.php">Tableau croisé</a>
+							</li>
+						</ul>
+					</li>
+					<li class="has-dropdown not-click">
+						<a >Graphe</a><!-- menu selectioné -->
+						<ul class="dropdown">
+							<li>
+								<a href="graphe.php">Graphe du stock</a>
+							</li>							
+						</ul>
+					</li>
+				</ul>
+			</section>
+		</nav>
+		<div class="panel clearfix ">
+			<form method="post" id="result" name="result">
+	
+					
+					<div id="alertebi"></div><!-- Div remplit par le javascript-->
+					
+						<div class="row">
+							<h3> Définir le nom et le code du nouveau produit :</h3>
+							<div class="medium-3 columns ">
+								<label for="nomProduit" class="right">Nom du produit</label>
+							</div>
+							<div class="medium-3 columns end">
+								<input type="text" id="nomProduit"name="nomProduit" placeholder="Nom du produit">
+							</div>
+						</div>
+					
+				
+						<div class="row">
+							<div class="medium-3 columns ">
+								<label for="codeProduit" class="right">Code du produit</label>
+							</div>
+							<div class="medium-3 columns end">
+								<input type="text" id="codeProduit" name="codeProduit" placeholder="Code du produit">
+							</div>
+						</div>
+						<div class="row">
+							
+					<table>
+						
+						<a  name="removeme" id="removeme" class="removeme" style="color:red;"><img src="img/foundation-icons/svgs/fi-trash.svg" alt="X" width="30" height="30"/> </a>
+						<div class="medium-3 columns ">
+						<tbody id="prop" name="prop">
+						</tbody>
+						</div>
+					</table>
+					<datalist></datalist>
+				</div>
+				<hr>
+				<div class="row">
+					<h3> Ajouter des propriétés au nouveau produit :</h3>
+					<div class="medium-3 columns ">				
+								<select id="propriete" name="propriete">
+									<option value="">-- propriete --</option>
+								</select>
+							</div>
+							<div class="medium-3 columns end">
+							<a  name="ajoutPropriete" id="ajoutPropriete" class="tiny button">+ Ajouter la propriété<span data-dropdown="drop4"></span></a>
+							</div>
+						</div>
+						<div class="row">
+							<div class="medium-3 columns end">
+						<a href="proprietecreator.html" target="blank" class="tiny  success button  ">+ Créer une nouvelle propriété<span data-dropdown="drop4"></span></a>
+				
+					</div>
+					</div>
+					<hr>
+				
+				<div class="row">
+					
+					<div class="medium-3 columns ">
+				<button type="submit" id="submit" name="submit" value="valider"  class="button  radius success round">
+					Ajouter le produit
+				</button>
+				</div>
+				<div class="medium-3 columns end">
+				<a class="button  alert radius round"   href="AjoutProduit.html">Annuler</a>
+				</div>
+				</div>
+				</div>
+				
+			</form>
+		</div>
+		
+		<script type="text/javascript" src="js/vendor/jquery.js"></script>
+		<script type="text/javascript">
+			// Ajax ajout de produit BDD via responseAjoutProduitphp
+			$(function() {
+				// à la sélection d une propriete dans la liste
+
+				$("#submit").click(function() {
+
+					/* Variables */
+					var codeProduit = $("#codeProduit").val();
+					var nomProduit = $("#nomProduit").val();
+					var listePropriete = document.getElementById("propriete");
+
+					/* recupération des proprietes*/
+					var properieteSelectione;
+					properieteSelectione = $("select").each(function() {
+						return ( $(this).data());
+					})
+					console.log("totototto= " + $(properieteSelectione.get(0)).val());
+					// todo: effacer au debugage
+					var tableauPropriete = [];
+					var tableauO = [];
+					var dataProprieteEtValeur = "";
+					var dataListePropriete = "";
+					for (var i = 0; i < properieteSelectione.length - 1; i++) {
+						tableauPropriete[i] = $(properieteSelectione.get(i)).attr("name");
+					}
+
+					for (var i = 0; i < properieteSelectione.length - 1; i++) {
+						dataProprieteEtValeur = dataProprieteEtValeur + '&' + tableauPropriete[i] + '=' + $('#' + tableauPropriete[i] + ' option:selected').text();
+						tableauO[tableauPropriete[i]] = $('#' + tableauPropriete[i] + ' option:selected').text();
+					}
+
+					for (var i = 0; i < properieteSelectione.length - 1; i++) {
+						dataListePropriete = dataListePropriete + '&p' + i + '=' + tableauPropriete[i];
+					}
+
+					/* DATASTRING */
+					var dataString = 'nomProduit=' + nomProduit + '&codeProduit=' + codeProduit + dataProprieteEtValeur;
+					console.log(dataString);
+					/* requette Ajax*/
+					$.ajax({
+						type : "POST",
+						url : "control/responseAjoutProduit.php",
+						data : dataString,
+						success : function(data) {
+							if (data == "fail ") {
+								var resultat = '<div data-alert class="alert-box warning ">Le produit n\'a pas été ajouté.  <a  name="close" id="close" class="close">&times;</a></div>';
+								document.getElementById('alertebi').innerHTML = resultat;
+								$(document).foundation('alert');
+								// rafraichi le code derrière l'alerte permetant ainsi de la fermer
+							} else {
+								confirm("Le produit a été crée.");
+								document.forms["result"].reset();
+								var resultat = '<div data-alert="" class="alert-box success radius">  Le produit a été ajouté.  <a  class="close">×</a>	</div>';
+								document.getElementById('alertebi').innerHTML = resultat;
+								$(document).foundation('alert');
+								// rafraichi le code derrière l'alerte permetant ainsi de la fermer
+							}
+							console.log(data)
+							console.log("AJAX DONE");
+						}
+					});
+					return false;
+				});
+				//EOF
+			});
+		</script>
+		<script type="text/javascript">
+			$("document").ready(function() {
+				var $propriete = $('#propriete');
+				/* Variables */
+				var go = "go";
+
+				/* DATASTRING */
+				var dataGo = 'go=' + go;
+
+				var $propriete1 = $('#propriete1');
+				var propriete;
+				var $prop = $('#prop');
+				// chargement des régions
+				$.ajax({
+					type : "POST",
+					url : 'control/chargementProprietes.php',
+					data : dataGo,
+					dataType : 'json', // on veut un retour JSON
+					success : function(json) {
+						$.each(json, function(index, value) {// pour chaque noeud JSON
+							// on ajoute l option dans la liste
+							$propriete.append('<option name="proprieteBase" id="proprieteBase" value="' + index + '">' + value + '</option>');
+							$(document).foundation('alert');
+							// rafraichi le code derrière l'alerte permetant ainsi de la fermer
+						});
+					}
+				});
+				// à la sélection d une propriete dans la liste
+				$("#ajoutPropriete").click(function() {
+					var val = $("#propriete").val();
+
+					if (val != '') {
+						propriete = $("#propriete").children(":selected").text();
+						//nom de la propriete
+						/* DATASTRING */
+						var dataPropriete = 'idPropriete=' + val;
+						if (!document.getElementById(propriete)) {
+							$prop.append('<tr> <td> ' + propriete + '</td><td><div class="lignes"><select data-' + propriete + '="' + propriete + '"  value="' + propriete + '" name="' + propriete + '" id="' + propriete + '" ></select></div></td><td><a  class="tiny  button" onClick="valeurEnPlus(' + propriete + ');" id="ajoutvaleur' + propriete + '" value="' + propriete + '">+ Autre valeur</a></td></tr>');
+						} else {
+							var resultat = '<div data-alert class="alert-box warning ">La propriété a déja été ajouté.  <a href="#" name="close" id="close" class="close">&times;</a></div>';
+							$(document).foundation('alert');
+							document.getElementById('alertebi').innerHTML = resultat;
+							$(document).foundation('alert');
+							// rafraichi le code derrière l'alerte permetant ainsi de la fermer
+						}
+						var $propriete1 = $('#' + propriete);
+						$.ajax({
+							url : 'control/chargementProprietes.php',
+							type : 'POST',
+							data : dataPropriete,
+							dataType : 'json',
+							success : function(json) {
+								$.each(json, function(indexProp, valeurProp) {
+									if (!document.getElementById(valeurProp)) {
+										$propriete1.append('<option name="valeurProp" id="' + valeurProp + '" value="' + propriete + '">' + valeurProp + '</option>');
+										console.log("valeurprop: " + valeurProp);
+									}
+								});
+							}
+						});
+					}
+				});
+				$(document.getElementById("removeme")).click(function() {
+					$prop.empty();
+				});
+			});
+		</script>
+		<script src="js/vendor/jquery.js"></script>
+		<script src="js/vendor/fastclick.js"></script>
+		<script src="js/foundation/foundation.js"></script>
+		<script src="js/foundation/foundation.topbar.js"></script>
+		<script src="js/foundation/foundation.alert.js"></script>
+
+	</body>
+
+</html>
+
