@@ -1,25 +1,16 @@
 <?php
 
-$go = $_POST['go'];
-$idProprieteC = $_POST['idProprieteC'];
-$idProprieteL = $_POST['idProprieteL'];
-$idProprieteF =null;
-$idFiltre = $_POST['idFiltre'];
-$filtre = $_POST['valeurFiltre'];
-$headerColonne[] = array();
-$headerLigne[] = array();
-$tabRetour[][] = array();
-// surement du code script html pour du code genere
-$StringRetour = "<TR>";
-$ligne = 0;
-$colonne = 0;
-if ($go == 'go' || !empty($idProprieteL)&& !empty($idProprieteC)) {
-	$json = array();
-	// connexion à la base de données
-	include 'connexion.php';
-	if (isset($idProprieteL) && isset($idProprieteC)) {
-		$id_ProprieteL = htmlentities(intval($idProprieteL));
-		$requete = 'SELECT id_valeur, value FROM valeur WHERE id_propriete = ' . $idProprieteL . ' ORDER BY id_valeur';
+
+$dateMin = $_POST['dateMin'];
+
+// code javascript  
+$StringRetour="<script>";
+
+if (!empty($dateMin)) {
+	// connexion à la base de données	
+	if (isset($dateMin)) {
+		include 'connexion.php';
+		$requete = 'SELECT ***** FROM produits GROUP BY id_propriete ORDER date';
 		// exécution de la requête
 		$resultat = $connexion -> query($requete) or die(print_r($connexion -> errorInfo()));
 		// résultats
@@ -39,6 +30,7 @@ if ($go == 'go' || !empty($idProprieteL)&& !empty($idProprieteC)) {
 
 			$colonne++;
 		}
+	
 		$requete = 'INSERT INTO dernier_stock (id_produit, stock)  select id_produit, etat_stock
 					from nostradamus.stocks  where (id_produit, date) in (
 					    select id_produit, max(date) as date
