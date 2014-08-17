@@ -14,4 +14,4 @@ How to install:
 
 4-Open index.php and enjoy
 
-Try it at <a target="blank"  href="http://mymealtraiteur.fr/moi/nostradamus/">here</a> 
+Try it <a target="blank"  href="http://mymealtraiteur.fr/moi/nostradamus/">here</a> 
