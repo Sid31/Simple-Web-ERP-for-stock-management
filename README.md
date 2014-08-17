@@ -13,3 +13,5 @@ How to install:
 3-Load the script generateTable.sql in your database Mysql
 
 4-Open index.php and enjoy
+
+Try it at <a href="www.mymealtraiteur.fr/moi/nostradamus">here</a> 
